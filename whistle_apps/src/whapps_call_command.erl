@@ -122,8 +122,7 @@
 %% @end
 %%--------------------------------------------------------------------
 -spec presence/2 :: (ne_binary(), ne_binary() | whapps_call:call()) -> 'ok'.
--spec presence/3 :: (ne_binary(), ne_binary() | whapps_call:call(), ne_binary() | whapps_call:call() | 'undefined') -> 'ok'.
-
+-spec presence/3 :: (ne_binary(), ne_binary() | whapps_call:call(), api_binary() | whapps_call:call()) -> 'ok'.
 presence(State, PresenceId) when is_binary(PresenceId) ->
     presence(State, PresenceId, undefined);
 presence(State, Call) ->
@@ -146,8 +145,8 @@ presence(State, PresenceId, Call) ->
 %% This request will execute immediately
 %% @end
 %%--------------------------------------------------------------------
--spec call_status/1 :: ('undefined' | ne_binary() | whapps_call:call()) -> 'ok' |
-                                                                           {'error', 'no_call_id'}.
+-spec call_status/1 :: (api_binary() | whapps_call:call()) -> 'ok' |
+                                                              {'error', 'no_call_id'}.
 call_status(undefined) ->
     {error, no_call_id};
 call_status(CallId) when is_binary(CallId) ->
@@ -158,7 +157,7 @@ call_status(CallId) when is_binary(CallId) ->
 call_status(Call) ->
     call_status(whapps_call:call_id(Call)).
 
--spec b_call_status/1 :: ('undefined' | ne_binary() | whapps_call:call()) -> whapps_api_std_return().
+-spec b_call_status/1 :: (api_binary() | whapps_call:call()) -> whapps_api_std_return().
 b_call_status(undefined) ->
     {error, no_call_id};
 b_call_status(CallId) when is_binary(CallId) ->
@@ -187,7 +186,7 @@ b_call_status(Call) ->
 %% This request will execute immediately
 %% @end
 %%--------------------------------------------------------------------
--spec channel_status/1 :: ('undefined' | ne_binary() | whapps_call:call()) ->
+-spec channel_status/1 :: (api_binary() | whapps_call:call()) ->
                                   'ok' |
                                   {'error', 'no_channel_id'}.
 channel_status(undefined) ->
@@ -200,7 +199,7 @@ channel_status(CallId) when is_binary(CallId) ->
 channel_status(Call) ->
     channel_status(whapps_call:call_id(Call)).
 
--spec b_channel_status/1 :: ('undefined' | ne_binary() | whapps_call:call()) -> whapps_api_std_return().
+-spec b_channel_status/1 :: (api_binary() | whapps_call:call()) -> whapps_api_std_return().
 b_channel_status(undefined) ->
     {error, no_channel_id};
 b_channel_status(ChannelId) when is_binary(ChannelId) ->
@@ -675,10 +674,10 @@ b_prompt(Prompt, Lang, Call) ->
 %% @end
 %%--------------------------------------------------------------------
 -spec play/2 :: (ne_binary(), whapps_call:call()) -> ne_binary().
--spec play/3 :: (ne_binary(), [ne_binary(),...], whapps_call:call()) -> ne_binary().
+-spec play/3 :: (ne_binary(), [ne_binary(),...] | 'undefined', whapps_call:call()) -> ne_binary().
 
 -spec b_play/2 :: (ne_binary(), whapps_call:call()) -> whapps_api_std_return().
--spec b_play/3 :: (ne_binary(), [ne_binary(),...], whapps_call:call()) -> whapps_api_std_return().
+-spec b_play/3 :: (ne_binary(), [ne_binary(),...] | 'undefined', whapps_call:call()) -> whapps_api_std_return().
 
 play(Media, Call) ->
     play(Media, ?ANY_DIGIT, Call).
